@@ -39,7 +39,7 @@ namespace store_backend.Dao
             return new AuthenticateResponseDto(user, jwtToken);
         }
 
-        public IEnumerable<PersonaDTO> GetAll()
+        public IEnumerable<Dictionary<string, dynamic>> GetAll()
         {
             var personas= _context.Personas;
             List<Dictionary<string, dynamic>> personasResponse= new List<Dictionary<string, dynamic>>();
@@ -57,15 +57,35 @@ namespace store_backend.Dao
 
             Console.WriteLine(personasResponse);
 
-            return _context.Personas;
+            return personasResponse;
         }
 
         public PersonaDTO GetById(int id)
         {
             var user = _context.Personas.Find(id);
+
+
             if (user == null) throw new KeyNotFoundException("Person not found");
+
             return user;
         }
+
+        public Dictionary<string, dynamic> GetByIdRequest(int id)
+        {
+            var user = _context.Personas.Find(id);
+
+            Dictionary<string, dynamic> userResponse= new Dictionary<string, dynamic>();
+
+            if (user == null) throw new KeyNotFoundException("Person not found");
+
+            userResponse.Add("id", user.Id);
+            userResponse.Add("username", user.Username);
+            userResponse.Add("name", user.Name);
+            userResponse.Add("role", user.Role);
+
+            return userResponse;
+        }
+
 
         public async Task<int> CreateUser(PersonaDTO persona)
         {
@@ -88,10 +108,10 @@ namespace store_backend.Dao
     public interface IPersonaDao
     {
         AuthenticateResponseDto Authenticate(AuthenticateRequestDto model);
-        IEnumerable<PersonaDTO> GetAll();
+        IEnumerable<Dictionary<string, dynamic>> GetAll();
         PersonaDTO GetById(int id);
+        Dictionary<string, dynamic> GetByIdRequest(int id);
         Task<int> CreateUser(PersonaDTO user);
 
     }
-
-    }
+}

@@ -44,7 +44,7 @@ namespace store_backend.Controllers
 
         [Authorize(Roles.AdministradorSeguridad, Roles.AdministradorPuntoVenta)]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<PersonaDTO>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Dictionary<string, dynamic>>), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         public IActionResult GetAll()
         {
@@ -66,11 +66,11 @@ namespace store_backend.Controllers
         public IActionResult GetById(int id)
         {
             // only admins can access other user records
-            var currentUser = (PersonaDTO)HttpContext.Items["Persona"];
-            if (id != currentUser.Id && (currentUser.Role != Roles.AdministradorPuntoVenta || currentUser.Role != Roles.AdministradorInventario || currentUser.Role != Roles.AdministradorCompras || currentUser.Role != Roles.AdministradorSeguridad || currentUser.Role != Roles.AdministradorEstados))
+            var currentUser = HttpContext.Items["Persona"] as PersonaDTO;
+            if ( currentUser != null && id != currentUser.Id && (currentUser.Role != Roles.AdministradorPuntoVenta || currentUser.Role != Roles.AdministradorInventario || currentUser.Role != Roles.AdministradorCompras || currentUser.Role != Roles.AdministradorSeguridad || currentUser.Role != Roles.AdministradorEstados))
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var user = _personaDao.GetById(id);
+            var user = _personaDao.GetByIdRequest(id);
             return Ok(user);
         }
 
