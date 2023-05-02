@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>store_backend</name>
+    </assembly>
+    <members>
+        <member name="M:store_backend.Controllers.DbController.createDb">
+            <summary>
+            This method create the database and insert the stablished data
+            </summary>
+            <response code="201">Returns that the db was created and the data inserted</response>
+            <response code="400">If the the db and data cannot be inserted</response>
+        </member>
+        <member name="M:store_backend.Controllers.PersonaController.Authenticate(store_backend.Dto.AuthenticateRequestDto)">
+            <summary>
+            This method authenticate the person and returned basical info such as name, role and bearer token for authorization in the requests
+            </summary>
+            <response code="200">Return the user id, name, role and token</response>
+            <response code="400">If the username or password are incorrects or the user doesn't exist in the database</response>
+        </member>
+        <member name="M:store_backend.Controllers.PersonaController.GetAll">
+            <summary>
+            This method returns all users info
+            </summary>
+            <response code="200">Returns all the user id, name, role and username</response>
+            <response code="400">Unauthorized error token or not enough permissions</response>
+        </member>
+        <member name="M:store_backend.Controllers.PersonaController.GetById(System.Int32)">
+            <summary>
+            This method return all user info according id provided
+            </summary>
+            <response code="200">Returns all the request user info such as id, name, role and username</response>
+            <response code="400">Unauthorized error token or not enough permissions</response>
+        </member>
+        <member name="M:store_backend.Controllers.PersonaController.CreateUser(store_backend.Dto.PersonaDTO)">
+            <summary>
+            This method create a new user according the info provided
+            </summary>
+            <response code="200">Returns all the request user info such as id, name, role and username</response>
+            <response code="400">Unauthorized error token or not enough permissions</response>
+        </member>
+        <member name="M:store_backend.Controllers.ProductController.Get">
+            <summary>
+            This method returns the products inside the database
+            </summary>
+            <response code="200">Returns the list of products</response>
+            <response code="400">If the the products cannot be returned</response>
+        </member>
+        <member name="M:store_backend.Controllers.ProductController.Post(store_backend.Dto.ProductDto)">
+            <summary>
+            This method create a product into the db
+            </summary>
+            <response code="201">Insert a new product into the db</response>
+            <response code="400">If the product cannot be inserted into the db</response>
+        </member>
+        <member name="M:store_backend.Controllers.ProductController.UpdateProduct(System.Int32,store_backend.Dto.ProductDto)">
+            <summary>
+            This method update a product into the db
+            </summary>
+            <param name="id">This is the product id</param>
+            <returns></returns>
+            <response code="202">Update an existing product in the db</response>
+            <response code="400">If the product cannot be updated into the db</response>
+        </member>
+        <member name="M:store_backend.Controllers.ProductController.DeleteProduct(System.Int32,store_backend.Dto.ProductDto)">
+            <summary>
+            This method delete a product according the provided product id
+            </summary>
+            <param name="id">This is the product id to be deleted</param>
+            <returns></returns>
+            <response code="202">Delete a product in the database</response>
+            <response code="400">If the product cannot be deleted into the db</response>
+        </member>
+    </members>
+</doc>
